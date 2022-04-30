@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Like from "./common/like";
+import Pagination from "./common/pagination";
 import { getMovies } from "../services/fakeMovieService";
 
 class Movies extends Component {
-  state = { movies: getMovies() };
+  state = { movies: getMovies(), pageSize: 4 };
 
   handleDelete = (movie) => {
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
@@ -11,12 +12,16 @@ class Movies extends Component {
   };
 
   handleLike = (movie) => {
-      const movies = [...this.state.movies];
-      const index = movies.indexOf(movie);
-      movies[index] = {...movies[index]};
-      movies[index].liked = !movies[index].liked;
-      this.setState({movies});
-  }
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
+    movies[index] = { ...movies[index] };
+    movies[index].liked = !movies[index].liked;
+    this.setState({ movies });
+  };
+
+  handlePageChange = (page) => {
+    console.log(page);
+  };
 
   render() {
     const { length: count } = this.state.movies;
@@ -45,7 +50,10 @@ class Movies extends Component {
                 <td>{movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
                 <td>
-                  <Like onClick={() => this.handleLike(movie)} liked={movie.liked} />
+                  <Like
+                    onClick={() => this.handleLike(movie)}
+                    liked={movie.liked}
+                  />
                 </td>
                 <td>
                   <button
@@ -59,6 +67,11 @@ class Movies extends Component {
             ))}
           </tbody>
         </table>
+        <Pagination
+          itemsCount={count}
+          pageSize={10}
+          onPageChange={this.handlePageChange}
+        />
       </div>
     );
   }
