@@ -7,7 +7,7 @@ const ListGroup = (props) => {
     <ul className="list-group">
       {items.map((item) => (
         <li
-          onClick={() => props.onItemSelect(item)}
+          onClick={() => onItemSelect(item)}
           key={item[valueProperty]}
           className={item === selectedItem ? "list-group-item active" : "list-group-item"}
         >
