@@ -1,10 +1,17 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Table from "./table";
 import Like from "./like";
 
 class MoviesTable extends Component {
   columns = [
-    { path: "title", lable: "Table" },
+    {
+      path: "title",
+      lable: "Table",
+      content: (movie) => (
+        <Link to={`/movies/${movie._id}`}>{movie.title}</Link>
+      ),
+    },
     { path: "genre.name", lable: "Genre" },
     { path: "numberInStock", lable: "Stock" },
     { path: "dailyRentalRate", lable: "Rate" },
